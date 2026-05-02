@@ -87,17 +87,29 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 
 /* PROJECTS */
 .projects-section{padding-bottom:0;border-bottom:none;}
+.projects-header{max-width:960px;margin:0 auto 0;}
 .projects-intro{font-size:15px;color:var(--muted);max-width:520px;margin-bottom:3.5rem;line-height:1.8;}
-.project-item{display:grid;grid-template-columns:1fr auto;gap:5rem;align-items:start;padding:3.5rem 3rem;border-top:1px solid var(--border);}
+/* Card contido: max-width 960px, centralizado, fundo sutil */
+.project-item{
+  display:grid;
+  grid-template-columns:1fr 220px;
+  gap:3rem;
+  align-items:start;
+  padding:2.75rem 3rem;
+  border-top:1px solid var(--border);
+  max-width:960px;
+  margin:0 auto;
+  position:relative;
+}
 .project-item:last-child{border-bottom:1px solid var(--border);}
-.project-item.reverse{grid-template-columns:auto 1fr;}
+.project-item.reverse{grid-template-columns:220px 1fr;}
 .project-item.reverse .project-mockup{order:-1;}
-.project-index{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--accent2);margin-bottom:1.25rem;text-transform:uppercase;}
-.project-title{font-family:var(--serif);font-size:clamp(1.6rem,2.4vw,2rem);font-weight:400;line-height:1.15;margin-bottom:.5rem;color:var(--text);}
-.project-type{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:1.25rem;}
-.project-desc{font-size:14.5px;color:var(--muted);line-height:1.85;margin-bottom:1.5rem;max-width:480px;}
-.project-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:1.5rem;margin-bottom:2.25rem;}
-.tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border-md);padding:5px 10px;border-radius:var(--r-sm);background:transparent;}
+.project-index{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--accent2);margin-bottom:1rem;text-transform:uppercase;}
+.project-title{font-family:var(--serif);font-size:clamp(1.5rem,2.2vw,1.85rem);font-weight:400;line-height:1.15;margin-bottom:.4rem;color:var(--text);}
+.project-type{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:1rem;}
+.project-desc{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;max-width:100%;}
+.project-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:1.25rem;margin-bottom:1.75rem;}
+.tag{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--border-md);padding:4px 10px;border-radius:var(--r-sm);background:transparent;}
 .project-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent2);padding-bottom:3px;transition:color .2s,border-color .2s;}
 .project-cta:hover{color:var(--text);border-color:var(--text);}
 .project-badge{display:inline-block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-left:10px;vertical-align:middle;font-weight:400;}
@@ -259,7 +271,7 @@ img,video{max-width:100%;height:auto;}
 .exp-item > *{min-width:0;}
 
 @media(max-width:1100px){
-  .project-item,.project-item.reverse{grid-template-columns:1fr;gap:3rem;}
+  .project-item,.project-item.reverse{grid-template-columns:1fr;gap:2.5rem;max-width:600px;}
   .project-item.reverse .project-mockup{order:0;}
 }
 @media(max-width:768px){
@@ -393,9 +405,11 @@ img,video{max-width:100%;height:auto;}
 
 <!-- PROJETOS -->
 <section id="projetos" class="projects-section" aria-labelledby="projetos-title">
-  <div class="section-label" aria-hidden="true">02 / Projetos</div>
-  <h2 class="section-title" id="projetos-title">Apps que <em>criei</em>.</h2>
-  <p class="projects-intro">Quatro projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir e Oráculo Pessoal com acesso gratuito.</p>
+  <div class="projects-header">
+    <div class="section-label" aria-hidden="true">02 / Projetos</div>
+    <h2 class="section-title" id="projetos-title">Apps que <em>criei</em>.</h2>
+    <p class="projects-intro">Quatro projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir e Oráculo Pessoal com acesso gratuito.</p>
+  </div>
 
   <!-- 01 OBRA CERTA -->
   <article class="project-item reveal" aria-labelledby="proj1-title">
@@ -552,7 +566,7 @@ img,video{max-width:100%;height:auto;}
       <div>
         <h3 class="exp-role">Designer Gráfica &amp; Product Owner</h3>
         <ul class="exp-bullets">
-          <li>Criação integral de quatro apps proprietários — concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong><a href="https://jessblock.github.io/convergir/" target="_blank" rel="noopener noreferrer">Convergir</a></strong> (narrativa interativa, demo gratuita) e <strong>Oráculo Pessoal</strong> (entretenimento, gratuito)</li>
+          <li>Criação integral de quatro apps proprietários — concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong>Convergir</strong> (narrativa interativa, demo gratuita) e <strong>Oráculo Pessoal</strong> (entretenimento, gratuito)</li>
           <li>Design e produto para clientes em diferentes setores, com foco em tecnologia acessível e produtos digitais com propósito</li>
         </ul>
         <div class="exp-chips">
