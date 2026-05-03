@@ -87,23 +87,43 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 
 /* PROJECTS */
 .projects-section{padding-bottom:0;border-bottom:none;}
-.projects-header{max-width:960px;margin:0 auto 0;}
+.projects-header{max-width:760px;}
 .projects-intro{font-size:15px;color:var(--muted);max-width:520px;margin-bottom:3.5rem;line-height:1.8;}
-/* Card contido: max-width 960px, centralizado, fundo sutil */
-.project-item{
-  display:grid;
-  grid-template-columns:1fr 220px;
-  gap:3rem;
-  align-items:start;
-  padding:2.75rem 3rem;
-  border-top:1px solid var(--border);
-  max-width:960px;
-  margin:0 auto;
-  position:relative;
+/* GALERIA HORIZONTAL — scroll snap, sem barras feias */
+.projects-gallery{
+  display:flex;
+  gap:2rem;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:1rem 1.25rem 2rem;
+  margin:0 -1.25rem;
+  scroll-padding-left:1.25rem;
 }
-.project-item:last-child{border-bottom:1px solid var(--border);}
-.project-item.reverse{grid-template-columns:220px 1fr;}
-.project-item.reverse .project-mockup{order:-1;}
+.projects-gallery::-webkit-scrollbar{display:none;}
+/* Card de cada projeto: mockup em cima + infos embaixo, largura fixa */
+.project-item{
+  flex:0 0 400px;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  gap:2rem;
+  padding:2rem;
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  background:linear-gradient(180deg,var(--surface) 0%,transparent 100%);
+  position:relative;
+  transition:border-color .3s,transform .3s;
+}
+.project-item:hover{border-color:var(--border-md);transform:translateY(-4px);}
+/* Anular antigo .reverse — agora todos têm mockup em cima */
+.project-item.reverse{display:flex;flex-direction:column;}
+/* Mockup sempre no topo do card */
+.project-mockup,.project-item.reverse .project-mockup{display:flex;justify-content:center;align-items:center;order:-1;}
+/* Texto do card */
+.project-item > div:not(.project-mockup){display:flex;flex-direction:column;}
 .project-index{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--accent2);margin-bottom:1rem;text-transform:uppercase;}
 .project-title{font-family:var(--serif);font-size:clamp(1.5rem,2.2vw,1.85rem);font-weight:400;line-height:1.15;margin-bottom:.4rem;color:var(--text);}
 .project-type{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent2);text-transform:uppercase;margin-bottom:1rem;}
@@ -117,16 +137,16 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .badge-free{background:rgba(127,200,127,.1);color:#9ed99e;border:1px solid rgba(127,200,127,.25);}
 .badge-demo{background:rgba(180,140,200,.12);color:#c8a6d8;border:1px solid rgba(180,140,200,.3);}
 
-/* MOCKUP — Galaxy S9 frame (aspect 18.5:9), fundo transparente */
+/* MOCKUP — iPhone 17 Pro Max frame (aspect 19.5:9), com status bar e Dynamic Island */
 .project-mockup{display:flex;justify-content:center;align-items:center;}
 .mockup-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
 .device{
   position:relative;
   width:200px;
-  height:404px;
-  border-radius:28px;
+  height:433px;
+  border-radius:36px;
   background:linear-gradient(145deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);
-  padding:6px 6px;
+  padding:5px;
   box-shadow:
     0 0 0 1.5px rgba(255,255,255,.08),
     inset 0 0 0 1px rgba(255,255,255,.04),
@@ -138,9 +158,44 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .device-screen{
   position:relative;
   width:100%;height:100%;
-  border-radius:22px;
+  border-radius:31px;
   overflow:hidden;
   background:#0a0a08;
+}
+/* Status bar do iOS (renderizada via CSS, sempre visível sobre os slides) */
+.device-statusbar{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:24px;
+  z-index:5;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 14px;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",sans-serif;
+  font-size:9px;
+  font-weight:600;
+  color:#fff;
+  pointer-events:none;
+}
+.device-statusbar-time{
+  letter-spacing:-.2px;
+  z-index:6;
+  padding-left:2px;
+}
+.device-statusbar-icons{
+  display:flex;align-items:center;gap:3px;
+  z-index:6;
+  padding-right:2px;
+}
+.device-statusbar-icons svg{display:block;}
+/* Dynamic Island */
+.device-island{
+  position:absolute;
+  top:6px;left:50%;transform:translateX(-50%);
+  width:60px;height:16px;
+  background:#000;
+  border-radius:10px;
+  z-index:7;
+  box-shadow:inset 0 0 0 .5px rgba(255,255,255,.04);
 }
 /* slide ocupa pelo menos 100% da altura do container, eliminando faixa vazia */
 .device-slide.active{min-height:100%;}
@@ -151,6 +206,8 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
   overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
+  padding-top:24px;
+  box-sizing:border-box;
 }
 .device-slides::-webkit-scrollbar{display:none;}
 .device-slide{
@@ -166,43 +223,6 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
   display:block;
   object-fit:contain;
 }
-/* carousel controls — agora ficam fora do .device, não sobem no hover */
-.device-controls{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:12px;
-}
-.device-nav{
-  display:flex;align-items:center;justify-content:center;gap:14px;
-  font-family:var(--mono);
-  font-size:10px;
-  color:var(--muted);
-}
-.device-arrow{
-  background:transparent;
-  border:1px solid var(--border-md);
-  color:var(--text);
-  width:30px;height:30px;
-  border-radius:50%;
-  cursor:pointer;
-  font-size:13px;
-  display:inline-flex;align-items:center;justify-content:center;
-  transition:background .2s,border-color .2s,color .2s;
-  padding:0;line-height:1;
-}
-.device-arrow:hover:not(:disabled){background:var(--accent);color:var(--bg);border-color:var(--accent);}
-.device-arrow:disabled{opacity:.35;cursor:not-allowed;}
-.device-counter{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--accent2);min-width:38px;text-align:center;}
-.device-dots{display:flex;gap:6px;align-items:center;justify-content:center;}
-.device-dot{
-  width:6px;height:6px;border-radius:50%;
-  background:var(--border-md);
-  border:none;cursor:pointer;
-  padding:0;
-  transition:background .2s,transform .2s;
-}
-.device-dot.active{background:var(--accent);transform:scale(1.3);}
 
 /* EXPERIENCE — espaços generosos, divisórias, chips */
 .exp-list{display:flex;flex-direction:column;margin-top:3rem;}
@@ -212,8 +232,8 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .exp-meta{display:flex;flex-direction:column;gap:.4rem;}
 .exp-period{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--accent2);}
 .exp-company{font-size:13px;color:var(--muted);}
-.exp-role{font-family:var(--serif);font-size:1.15rem;font-weight:400;margin-bottom:.4rem;line-height:1.3;color:var(--text);}
-.exp-subtitle{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent2);margin-bottom:1rem;}
+.exp-role{font-family:var(--serif);font-size:1.15rem;font-weight:400;margin-bottom:.6rem;line-height:1.3;color:var(--text);}
+.exp-subtitle{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--accent2);margin-bottom:1.5rem;}
 .exp-clients{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.75rem;}
 .exp-client{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:5px 9px;border-radius:var(--r-sm);}
 .exp-bullets{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
@@ -235,10 +255,10 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 
 /* STICKY BAR */
 .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;justify-content:center;align-items:center;background:var(--nav-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border-md);height:52px;}
-.sticky-bar a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color .2s,background .2s;padding:0 1.5rem;height:52px;display:flex;align-items:center;border-right:1px solid var(--border);white-space:nowrap;opacity:.7;}
+.sticky-bar a{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text);text-decoration:none;transition:color .2s,background .2s,opacity .2s;padding:0 1.5rem;height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-right:1px solid var(--border);white-space:nowrap;opacity:.7;}
+.sticky-bar a:last-child{border-right:none;}
 .sticky-bar a:hover{color:var(--accent);opacity:1;}
-.sticky-bar .bar-cta{color:var(--accent);background:rgba(212,195,154,.1);border-right:none;border-left:1px solid var(--border);opacity:1;}
-.sticky-bar .bar-cta:hover{background:var(--accent);color:var(--bg);}
+.bar-icon{flex-shrink:0;}
 
 /* FOOTER */
 footer{padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
@@ -259,10 +279,6 @@ img,video{max-width:100%;height:auto;}
 .project-item > *{min-width:0;}
 .exp-item > *{min-width:0;}
 
-@media(max-width:1100px){
-  .project-item,.project-item.reverse{grid-template-columns:1fr;gap:2.5rem;max-width:600px;}
-  .project-item.reverse .project-mockup{order:0;}
-}
 @media(max-width:768px){
   nav{padding:.9rem 1.25rem;}
   .nav-links{display:none;}
@@ -281,17 +297,15 @@ img,video{max-width:100%;height:auto;}
   .section-title{font-size:clamp(1.6rem,6vw,2.4rem);}
   .section-label{font-size:9px;}
   .about-text p{font-size:14px;}
-  .project-item{padding:2.5rem 0;gap:2rem;}
+  /* Em mobile: galeria vira coluna empilhada, sem scroll horizontal */
+  .projects-gallery{flex-direction:column;overflow:visible;scroll-snap-type:none;padding:0;margin:0;gap:1.5rem;}
+  .project-item{flex:1 1 auto;width:100%;padding:1.75rem;scroll-snap-align:none;}
   .project-title{font-size:1.5rem;}
   .project-desc{font-size:13.5px;}
   .project-badge{margin-left:6px;font-size:8px;padding:3px 8px;}
-  /* Projetos: chips com overflow-x rolável */
-  .project-tags{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%;max-width:100%;}
-  .project-tags::-webkit-scrollbar{display:none;}
-  .project-tags .tag{flex-shrink:0;}
   /* Mockup centraliza e respeita largura do viewport */
   .project-mockup{width:100%;}
-  .device{width:min(200px,calc(100vw - 6rem));height:auto;aspect-ratio:200/404;}
+  .device{width:min(200px,calc(100vw - 6rem));height:auto;aspect-ratio:200/433;}
   .numbers-strip{grid-template-columns:repeat(2,1fr);}
   .number-card{padding:1.75rem 1rem;}
   .number-value{font-size:clamp(2rem,7vw,2.6rem);}
@@ -299,19 +313,19 @@ img,video{max-width:100%;height:auto;}
   .exp-list{margin-top:2rem;}
   .exp-item{grid-template-columns:1fr;gap:1rem;padding:2.25rem 0 2.5rem;}
   .exp-role{font-size:1.05rem;}
-  /* Badges de empresas com overflow horizontal rolável */
-  .exp-clients{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%;max-width:100%;margin-bottom:1.5rem;}
-  .exp-clients::-webkit-scrollbar{display:none;}
-  .exp-client{flex-shrink:0;}
+  /* Em mobile: empresas escondidas + tags quebram naturalmente */
+  .exp-client.mobile-hidden{display:none;}
+  .exp-clients{margin-bottom:1.5rem;}
   /* Skills chips quebra normalmente (poucos chips) */
   .exp-chips{margin-top:1.5rem;}
   .exp-bullets li{font-size:13.5px;}
   .form-grid{grid-template-columns:1fr;gap:2.5rem;margin-top:3rem;}
   .cert-name{font-size:11px;}
   footer{padding:1.5rem 1.25rem;font-size:9px;}
-  .sticky-bar{overflow-x:auto;justify-content:flex-start;scrollbar-width:none;}
-  .sticky-bar::-webkit-scrollbar{display:none;}
-  .sticky-bar a{padding:0 1rem;font-size:10px;flex-shrink:0;}
+  .sticky-bar{justify-content:space-around;}
+  .sticky-bar a{padding:0;flex:1;border-right:none;justify-content:center;gap:0;}
+  .sticky-bar .bar-label{display:none;}
+  .bar-icon{width:18px;height:18px;}
 }
 @media(max-width:420px){
   /* iPhone SE / telas bem estreitas */
@@ -364,9 +378,9 @@ img,video{max-width:100%;height:auto;}
     <div class="number-value">15<span class="arrow">+</span></div>
     <div class="number-label">Anos de<br>experiência</div>
   </a>
-  <a href="#exp-dialog" class="number-card reveal" role="listitem" aria-label="NPS de 17 para 58 na Dialog — ir para experiência Dialog">
-    <div class="number-value">17<span class="arrow"> → </span>58</div>
-    <div class="number-label">NPS na<br>Dialog</div>
+  <a href="#exp-dialog" class="number-card reveal" role="listitem" aria-label="70% de adoção do Power AI Creator em 3 meses na Dialog — ir para experiência Dialog">
+    <div class="number-value">70<span class="arrow">%</span></div>
+    <div class="number-label">Adoção do<br>Power AI Creator</div>
   </a>
   <a href="#exp-dialog" class="number-card reveal" role="listitem" aria-label="85% de redução de backlog na Dialog — ir para experiência Dialog">
     <div class="number-value">85<span class="arrow">%</span></div>
@@ -400,6 +414,8 @@ img,video{max-width:100%;height:auto;}
     <p class="projects-intro">Quatro projetos proprietários criados por mim do zero — concepção, design, produto e desenvolvimento. Obra Certa disponível por assinatura; Neuro Lens, Convergir e Oráculo Pessoal com acesso gratuito.</p>
   </div>
 
+  <div class="projects-gallery" role="region" aria-label="Galeria de apps">
+
   <!-- 01 OBRA CERTA -->
   <article class="project-item reveal" aria-labelledby="proj1-title">
     <div>
@@ -412,23 +428,21 @@ img,video{max-width:100%;height:auto;}
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
-        <div class="device" data-carousel data-total="4">
+        <div class="device">
           <div class="device-screen">
+            <div class="device-island" aria-hidden="true"></div>
+            <div class="device-statusbar" aria-hidden="true">
+              <span class="device-statusbar-time">9:41</span>
+              <span class="device-statusbar-icons">
+                <svg width="11" height="7" viewBox="0 0 17 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="1" fill="#fff"/><rect x="4.7" y="4" width="3" height="7" rx="1" fill="#fff"/><rect x="9.4" y="2" width="3" height="9" rx="1" fill="#fff"/><rect x="14.1" y="0" width="3" height="11" rx="1" fill="#fff"/></svg>
+                <svg width="11" height="8" viewBox="0 0 16 11" fill="none"><path d="M8 2.5c2.2 0 4.2 0.8 5.7 2.2l1.4-1.4C13.3 1.5 10.7 0.5 8 0.5S2.7 1.5 0.9 3.3l1.4 1.4C3.8 3.3 5.8 2.5 8 2.5zM8 6c1.2 0 2.3 0.4 3.1 1.2l1.4-1.4C11.3 4.7 9.7 4 8 4S4.7 4.7 3.5 5.8l1.4 1.4C5.7 6.4 6.8 6 8 6zM8 9.5c0.7 0 1.4 0.3 1.9 0.8L8 12.2 6.1 10.3C6.6 9.8 7.3 9.5 8 9.5z" fill="#fff"/></svg>
+                <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
+              </span>
+            </div>
             <div class="device-slides">
               <div class="device-slide active"><img src="assets/obracerta_1.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/obracerta_2.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/obracerta_3.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/obracerta_4.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
-        </div>
-        <div class="device-controls">
-          <div class="device-nav">
-            <button class="device-arrow" data-prev aria-label="Print anterior">‹</button>
-            <span class="device-counter">1 / 4</span>
-            <button class="device-arrow" data-next aria-label="Próximo print">›</button>
-          </div>
-          <div class="device-dots" role="tablist"></div>
         </div>
       </div>
     </div>
@@ -446,23 +460,21 @@ img,video{max-width:100%;height:auto;}
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
-        <div class="device" data-carousel data-total="4">
+        <div class="device">
           <div class="device-screen">
+            <div class="device-island" aria-hidden="true"></div>
+            <div class="device-statusbar" aria-hidden="true">
+              <span class="device-statusbar-time">9:41</span>
+              <span class="device-statusbar-icons">
+                <svg width="11" height="7" viewBox="0 0 17 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="1" fill="#fff"/><rect x="4.7" y="4" width="3" height="7" rx="1" fill="#fff"/><rect x="9.4" y="2" width="3" height="9" rx="1" fill="#fff"/><rect x="14.1" y="0" width="3" height="11" rx="1" fill="#fff"/></svg>
+                <svg width="11" height="8" viewBox="0 0 16 11" fill="none"><path d="M8 2.5c2.2 0 4.2 0.8 5.7 2.2l1.4-1.4C13.3 1.5 10.7 0.5 8 0.5S2.7 1.5 0.9 3.3l1.4 1.4C3.8 3.3 5.8 2.5 8 2.5zM8 6c1.2 0 2.3 0.4 3.1 1.2l1.4-1.4C11.3 4.7 9.7 4 8 4S4.7 4.7 3.5 5.8l1.4 1.4C5.7 6.4 6.8 6 8 6zM8 9.5c0.7 0 1.4 0.3 1.9 0.8L8 12.2 6.1 10.3C6.6 9.8 7.3 9.5 8 9.5z" fill="#fff"/></svg>
+                <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
+              </span>
+            </div>
             <div class="device-slides">
               <div class="device-slide active"><img src="assets/neurolens_1.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/neurolens_2.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/neurolens_3.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/neurolens_4.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
-        </div>
-        <div class="device-controls">
-          <div class="device-nav">
-            <button class="device-arrow" data-prev aria-label="Print anterior">‹</button>
-            <span class="device-counter">1 / 4</span>
-            <button class="device-arrow" data-next aria-label="Próximo print">›</button>
-          </div>
-          <div class="device-dots" role="tablist"></div>
         </div>
       </div>
     </div>
@@ -480,24 +492,21 @@ img,video{max-width:100%;height:auto;}
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
-        <div class="device" data-carousel data-total="5">
+        <div class="device">
           <div class="device-screen">
+            <div class="device-island" aria-hidden="true"></div>
+            <div class="device-statusbar" aria-hidden="true">
+              <span class="device-statusbar-time">9:41</span>
+              <span class="device-statusbar-icons">
+                <svg width="11" height="7" viewBox="0 0 17 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="1" fill="#fff"/><rect x="4.7" y="4" width="3" height="7" rx="1" fill="#fff"/><rect x="9.4" y="2" width="3" height="9" rx="1" fill="#fff"/><rect x="14.1" y="0" width="3" height="11" rx="1" fill="#fff"/></svg>
+                <svg width="11" height="8" viewBox="0 0 16 11" fill="none"><path d="M8 2.5c2.2 0 4.2 0.8 5.7 2.2l1.4-1.4C13.3 1.5 10.7 0.5 8 0.5S2.7 1.5 0.9 3.3l1.4 1.4C3.8 3.3 5.8 2.5 8 2.5zM8 6c1.2 0 2.3 0.4 3.1 1.2l1.4-1.4C11.3 4.7 9.7 4 8 4S4.7 4.7 3.5 5.8l1.4 1.4C5.7 6.4 6.8 6 8 6zM8 9.5c0.7 0 1.4 0.3 1.9 0.8L8 12.2 6.1 10.3C6.6 9.8 7.3 9.5 8 9.5z" fill="#fff"/></svg>
+                <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
+              </span>
+            </div>
             <div class="device-slides">
               <div class="device-slide active"><img src="assets/convergir_1.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/convergir_2.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/convergir_3.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/convergir_4.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/convergir_5.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
-        </div>
-        <div class="device-controls">
-          <div class="device-nav">
-            <button class="device-arrow" data-prev aria-label="Print anterior">‹</button>
-            <span class="device-counter">1 / 5</span>
-            <button class="device-arrow" data-next aria-label="Próximo print">›</button>
-          </div>
-          <div class="device-dots" role="tablist"></div>
         </div>
       </div>
     </div>
@@ -515,27 +524,26 @@ img,video{max-width:100%;height:auto;}
     </div>
     <div class="project-mockup" aria-hidden="true">
       <div class="mockup-wrap">
-        <div class="device" data-carousel data-total="6">
+        <div class="device">
           <div class="device-screen">
+            <div class="device-island" aria-hidden="true"></div>
+            <div class="device-statusbar" aria-hidden="true">
+              <span class="device-statusbar-time">9:41</span>
+              <span class="device-statusbar-icons">
+                <svg width="11" height="7" viewBox="0 0 17 11" fill="none"><rect x="0" y="6" width="3" height="5" rx="1" fill="#fff"/><rect x="4.7" y="4" width="3" height="7" rx="1" fill="#fff"/><rect x="9.4" y="2" width="3" height="9" rx="1" fill="#fff"/><rect x="14.1" y="0" width="3" height="11" rx="1" fill="#fff"/></svg>
+                <svg width="11" height="8" viewBox="0 0 16 11" fill="none"><path d="M8 2.5c2.2 0 4.2 0.8 5.7 2.2l1.4-1.4C13.3 1.5 10.7 0.5 8 0.5S2.7 1.5 0.9 3.3l1.4 1.4C3.8 3.3 5.8 2.5 8 2.5zM8 6c1.2 0 2.3 0.4 3.1 1.2l1.4-1.4C11.3 4.7 9.7 4 8 4S4.7 4.7 3.5 5.8l1.4 1.4C5.7 6.4 6.8 6 8 6zM8 9.5c0.7 0 1.4 0.3 1.9 0.8L8 12.2 6.1 10.3C6.6 9.8 7.3 9.5 8 9.5z" fill="#fff"/></svg>
+                <svg width="16" height="8" viewBox="0 0 25 11" fill="none"><rect x="0.5" y="0.5" width="21" height="10" rx="2.5" stroke="#fff" stroke-opacity="0.5" fill="none"/><rect x="2" y="2" width="18" height="7" rx="1" fill="#fff"/><rect x="22.5" y="3.5" width="1.5" height="4" rx="0.7" fill="#fff" fill-opacity="0.5"/></svg>
+              </span>
+            </div>
             <div class="device-slides">
-              <div class="device-slide active"><img src="assets/oraculo_1.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/oraculo_2.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/oraculo_3.webp" alt="" loading="lazy"/></div>
-              <div class="device-slide"><img src="assets/oraculo_4.webp" alt="" loading="lazy"/></div>
+              <div class="device-slide active"><img src="assets/oraculo_2.webp" alt="" loading="lazy"/></div>
             </div>
           </div>
-        </div>
-        <div class="device-controls">
-          <div class="device-nav">
-            <button class="device-arrow" data-prev aria-label="Print anterior">‹</button>
-            <span class="device-counter">1 / 6</span>
-            <button class="device-arrow" data-next aria-label="Próximo print">›</button>
-          </div>
-          <div class="device-dots" role="tablist"></div>
         </div>
       </div>
     </div>
   </article>
+  </div>
 </section>
 
 <!-- EXPERIÊNCIA -->
@@ -552,6 +560,7 @@ img,video{max-width:100%;height:auto;}
       </div>
       <div>
         <h3 class="exp-role">Designer Gráfica &amp; Product Owner</h3>
+        <p class="exp-subtitle">Concepção, design e produto de apps proprietários</p>
         <ul class="exp-bullets">
           <li>Criação integral de quatro apps proprietários — concepção, design, produto e desenvolvimento: <strong>Obra Certa</strong> (SaaS B2B por assinatura), <strong>Neuro Lens</strong> (triagem TEA/TDAH, gratuito), <strong>Convergir</strong> (narrativa interativa, demo gratuita) e <strong>Oráculo Pessoal</strong> (entretenimento, gratuito)</li>
           <li>Design e produto para clientes em diferentes setores, com foco em tecnologia acessível e produtos digitais com propósito</li>
@@ -574,16 +583,36 @@ img,video{max-width:100%;height:auto;}
       </div>
       <div>
         <h3 class="exp-role">Designer Gráfica / Strategic Communication</h3>
+        <p class="exp-subtitle">Comunicação visual estratégica para o agronegócio brasileiro</p>
         <div class="exp-clients" aria-label="Empresas atendidas na Crosara">
-          <span class="exp-client">Bayer</span>
+          <span class="exp-client mobile-hidden">ADAMA</span>
+          <span class="exp-client mobile-hidden">Agrária</span>
+          <span class="exp-client mobile-hidden">Agrex</span>
+          <span class="exp-client mobile-hidden">Agroadvance</span>
+          <span class="exp-client mobile-hidden">Andav</span>
           <span class="exp-client">BASF</span>
+          <span class="exp-client">Bayer</span>
+          <span class="exp-client mobile-hidden">Belagrícola</span>
+          <span class="exp-client mobile-hidden">Cooperativa Holambra</span>
+          <span class="exp-client mobile-hidden">Coopercitrus</span>
+          <span class="exp-client mobile-hidden">Cooxupé</span>
           <span class="exp-client">Corteva</span>
-          <span class="exp-client">Syngenta</span>
-          <span class="exp-client">Mosaic</span>
-          <span class="exp-client">ADAMA</span>
-          <span class="exp-client">Coopercitrus</span>
-          <span class="exp-client">Cooxupé</span>
-          <span class="exp-client">Lavoro</span>
+          <span class="exp-client mobile-hidden">Daymsa</span>
+          <span class="exp-client mobile-hidden">J. Demito</span>
+          <span class="exp-client mobile-hidden">Koppert</span>
+          <span class="exp-client mobile-hidden">Kracht</span>
+          <span class="exp-client mobile-hidden">Lavoro</span>
+          <span class="exp-client mobile-hidden">Minasul</span>
+          <span class="exp-client mobile-hidden">Mosaic</span>
+          <span class="exp-client mobile-hidden">Ouro Fino</span>
+          <span class="exp-client mobile-hidden">Paiol</span>
+          <span class="exp-client mobile-hidden">Planfer</span>
+          <span class="exp-client mobile-hidden">Playbooks</span>
+          <span class="exp-client mobile-hidden">Prime Agro</span>
+          <span class="exp-client mobile-hidden">Risa</span>
+          <span class="exp-client mobile-hidden">Sumitomo</span>
+          <span class="exp-client mobile-hidden">Syngenta</span>
+          <span class="exp-client mobile-hidden">Volkswagen</span>
         </div>
         <ul class="exp-bullets">
           <li>+60 apresentações executivas para <strong>Big 4 do agronegócio global</strong> (Bayer, BASF, Corteva, Syngenta) e 22 empresas líderes</li>
@@ -610,36 +639,35 @@ img,video{max-width:100%;height:auto;}
         <h3 class="exp-role">Coordenadora da Área de Produtos Digitais &amp; Product Owner</h3>
         <p class="exp-subtitle">Liderança de equipe + execução operacional simultâneas</p>
         <div class="exp-clients" aria-label="Empresas enterprise atendidas pela plataforma Dialog">
-          <span class="exp-client">Simpar</span>
-          <span class="exp-client">Marilan</span>
+          <span class="exp-client mobile-hidden">Simpar</span>
+          <span class="exp-client mobile-hidden">Marilan</span>
           <span class="exp-client">Espaçolaser</span>
-          <span class="exp-client">Rihappy</span>
+          <span class="exp-client mobile-hidden">Rihappy</span>
           <span class="exp-client">Amaggi</span>
-          <span class="exp-client">Arteris</span>
-          <span class="exp-client">Clamed</span>
-          <span class="exp-client">Leão</span>
-          <span class="exp-client">ArcelorMittal</span>
-          <span class="exp-client">Havan</span>
-          <span class="exp-client">SBT</span>
+          <span class="exp-client mobile-hidden">Arteris</span>
+          <span class="exp-client mobile-hidden">Clamed</span>
+          <span class="exp-client mobile-hidden">Leão</span>
+          <span class="exp-client mobile-hidden">ArcelorMittal</span>
+          <span class="exp-client mobile-hidden">Havan</span>
+          <span class="exp-client mobile-hidden">SBT</span>
           <span class="exp-client">Carrefour</span>
-          <span class="exp-client">Coplacana</span>
-          <span class="exp-client">Nutrien</span>
-          <span class="exp-client">Omie</span>
-          <span class="exp-client">Localiza</span>
-          <span class="exp-client">JHSF</span>
-          <span class="exp-client">Avon</span>
-          <span class="exp-client">Atlântica</span>
-          <span class="exp-client">Saint-Gobain</span>
-          <span class="exp-client">Ecogen</span>
-          <span class="exp-client">Sextante</span>
-          <span class="exp-client">Ultracargo</span>
-          <span class="exp-client">Fortlev</span>
+          <span class="exp-client mobile-hidden">Coplacana</span>
+          <span class="exp-client mobile-hidden">Nutrien</span>
+          <span class="exp-client mobile-hidden">Omie</span>
+          <span class="exp-client mobile-hidden">Localiza</span>
+          <span class="exp-client mobile-hidden">JHSF</span>
+          <span class="exp-client mobile-hidden">Avon</span>
+          <span class="exp-client mobile-hidden">Atlântica</span>
+          <span class="exp-client mobile-hidden">Saint-Gobain</span>
+          <span class="exp-client mobile-hidden">Ecogen</span>
+          <span class="exp-client mobile-hidden">Sextante</span>
+          <span class="exp-client mobile-hidden">Ultracargo</span>
+          <span class="exp-client mobile-hidden">Fortlev</span>
         </div>
         <ul class="exp-bullets">
           <li><strong>Liderava a área</strong> e ao mesmo tempo atuava como PO, responsável pelo estratégico e pelo operacional do produto em paralelo, sem separação de funções</li>
           <li>Gestão direta de squads multidisciplinares (dev, UX/UI, P&amp;D, QA): rituais ágeis, sprint planning, priorização e alinhamento entre áreas técnicas e de negócio</li>
           <li>Backlog reduzido de <strong>264 para menos de 40 tarefas</strong> em menos de 12 meses, com 85% de aumento de capacidade de entrega</li>
-          <li>NPS evoluído de <strong>17 para 58</strong> em pouco mais de um ano</li>
           <li>Plataforma SaaS B2B com IA para <strong>+27 empresas enterprise</strong>: roadmap, discovery, PRD e acompanhamento de delivery de ponta a ponta</li>
           <li>Implementação end-to-end de 3 módulos do ecossistema Dialog AI, incluindo Power AI Creator (diferencial comercial n.1) e Índice de Engajamento com 70% de adoção em 3 meses</li>
           <li>Resultado: economia de <strong>1 a 3h semanais para 44%</strong> dos colaboradores e +40% de produtividade nas equipes clientes</li>
@@ -667,6 +695,7 @@ img,video{max-width:100%;height:auto;}
       </div>
       <div>
         <h3 class="exp-role">Líder de Conteúdo / Product Education</h3>
+        <p class="exp-subtitle">Liderança de time de conteúdo educacional corporativo</p>
         <div class="exp-clients" aria-label="Empresas atendidas na Kanttum">
           <span class="exp-client">Tribanco</span>
           <span class="exp-client">Martins</span>
@@ -694,27 +723,28 @@ img,video{max-width:100%;height:auto;}
       </div>
       <div>
         <h3 class="exp-role">Designer Instrucional / Corporate Education</h3>
+        <p class="exp-subtitle">Roteiros e padrões educacionais para grandes empresas</p>
         <div class="exp-clients" aria-label="Empresas atendidas na PrismaFS">
-          <span class="exp-client">Algar Telecom</span>
-          <span class="exp-client">Banco Safra</span>
+          <span class="exp-client mobile-hidden">Algar Telecom</span>
+          <span class="exp-client mobile-hidden">Banco Safra</span>
           <span class="exp-client">Bayer</span>
-          <span class="exp-client">BRF</span>
-          <span class="exp-client">Clariant</span>
-          <span class="exp-client">DEMB</span>
-          <span class="exp-client">Electrolux</span>
-          <span class="exp-client">Hypermarcas</span>
+          <span class="exp-client mobile-hidden">BRF</span>
+          <span class="exp-client mobile-hidden">Clariant</span>
+          <span class="exp-client mobile-hidden">DEMB</span>
+          <span class="exp-client mobile-hidden">Electrolux</span>
+          <span class="exp-client mobile-hidden">Hypermarcas</span>
           <span class="exp-client">Itaú-Unibanco</span>
-          <span class="exp-client">Martins</span>
+          <span class="exp-client mobile-hidden">Martins</span>
           <span class="exp-client">Nestlé</span>
-          <span class="exp-client">Pernambucanas</span>
-          <span class="exp-client">Sabesp</span>
-          <span class="exp-client">Sicredi</span>
-          <span class="exp-client">SKY</span>
-          <span class="exp-client">Tribanco</span>
-          <span class="exp-client">UniAlgar</span>
-          <span class="exp-client">Unipar Carbocloro</span>
-          <span class="exp-client">Viacredi</span>
-          <span class="exp-client">Zurich</span>
+          <span class="exp-client mobile-hidden">Pernambucanas</span>
+          <span class="exp-client mobile-hidden">Sabesp</span>
+          <span class="exp-client mobile-hidden">Sicredi</span>
+          <span class="exp-client mobile-hidden">SKY</span>
+          <span class="exp-client mobile-hidden">Tribanco</span>
+          <span class="exp-client mobile-hidden">UniAlgar</span>
+          <span class="exp-client mobile-hidden">Unipar Carbocloro</span>
+          <span class="exp-client mobile-hidden">Viacredi</span>
+          <span class="exp-client mobile-hidden">Zurich</span>
         </div>
         <ul class="exp-bullets">
           <li>+360 roteiros educacionais para 12 grandes empresas (Itaú-Unibanco, Nestlé, Bayer, Electrolux, Clariant…)</li>
@@ -738,7 +768,7 @@ img,video{max-width:100%;height:auto;}
   <div class="form-grid">
     <div>
       <div class="section-label" style="margin-bottom:1.5rem;" aria-hidden="true">Formação</div>
-      <div class="cert-row"><span class="cert-name">Psicologia <span class="em-tag">EM CURSO</span></span></div>
+      <div class="cert-row"><span class="cert-name">Psicologia <span class="em-tag">EM BREVE</span></span></div>
       <div class="cert-row"><span class="cert-name">Análise do Comportamento Aplicada (ABA) <span class="em-tag">EM CURSO</span></span></div>
       <div class="cert-row"><span class="cert-name">Bacharelado em Design Gráfico — ESAMC</span></div>
     </div>
@@ -760,11 +790,22 @@ img,video{max-width:100%;height:auto;}
 </footer>
 
 <div class="sticky-bar" role="navigation" aria-label="Links rápidos">
-  <a href="mailto:jessicatwblock@gmail.com">Email</a>
-  <a href="https://wa.me/5534999441161" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-  <a href="https://linkedin.com/in/jessicatwblock" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-  <a href="#projetos">Projetos</a>
-  <a href="mailto:jessicatwblock@gmail.com" class="bar-cta">Entre em contato →</a>
+  <a href="mailto:jessicatwblock@gmail.com" aria-label="E-mail">
+    <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+    <span class="bar-label">E-mail</span>
+  </a>
+  <a href="https://wa.me/5534999441161" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+    <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"/></svg>
+    <span class="bar-label">WhatsApp</span>
+  </a>
+  <a href="https://linkedin.com/in/jessicatwblock" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+    <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+    <span class="bar-label">LinkedIn</span>
+  </a>
+  <a href="#projetos" aria-label="Projetos">
+    <svg class="bar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+    <span class="bar-label">Projetos</span>
+  </a>
 </div>
 
 <script>
@@ -774,47 +815,6 @@ const obs=new IntersectionObserver(entries=>{
 },{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.reveal').forEach((el,i)=>{
   el.style.transitionDelay=(i%4)*60+'ms';obs.observe(el);
-});
-
-// CARROSSEL DENTRO DO MOCKUP
-document.querySelectorAll('[data-carousel]').forEach(carousel=>{
-  const total=parseInt(carousel.dataset.total,10);
-  const slides=carousel.querySelectorAll('.device-slide');
-  const slidesContainer=carousel.querySelector('.device-slides');
-  // controles ficam fora do .device, no parent .mockup-wrap
-  const wrap=carousel.parentElement;
-  const counter=wrap.querySelector('.device-counter');
-  const prevBtn=wrap.querySelector('[data-prev]');
-  const nextBtn=wrap.querySelector('[data-next]');
-  const dotsContainer=wrap.querySelector('.device-dots');
-  let idx=0;
-
-  // criar dots
-  for(let i=0;i<total;i++){
-    const d=document.createElement('button');
-    d.className='device-dot'+(i===0?' active':'');
-    d.setAttribute('aria-label','Ir para print '+(i+1));
-    d.dataset.index=i;
-    dotsContainer.appendChild(d);
-  }
-  const dots=dotsContainer.querySelectorAll('.device-dot');
-
-  function go(n){
-    if(n<0||n>=total)return;
-    slides[idx].classList.remove('active');
-    dots[idx].classList.remove('active');
-    idx=n;
-    slides[idx].classList.add('active');
-    dots[idx].classList.add('active');
-    counter.textContent=(idx+1)+' / '+total;
-    prevBtn.disabled=idx===0;
-    nextBtn.disabled=idx===total-1;
-    if(slidesContainer){slidesContainer.scrollTop=0;}
-  }
-  prevBtn.addEventListener('click',()=>go(idx-1));
-  nextBtn.addEventListener('click',()=>go(idx+1));
-  dots.forEach(d=>d.addEventListener('click',()=>go(parseInt(d.dataset.index,10))));
-  go(0);
 });
 </script>
 </body>
