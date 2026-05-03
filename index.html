@@ -117,16 +117,16 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
 .badge-free{background:rgba(127,200,127,.1);color:#9ed99e;border:1px solid rgba(127,200,127,.25);}
 .badge-demo{background:rgba(180,140,200,.12);color:#c8a6d8;border:1px solid rgba(180,140,200,.3);}
 
-/* MOCKUP — Galaxy S25 Ultra frame, fundo transparente */
+/* MOCKUP — Galaxy S9 frame (aspect 18.5:9), fundo transparente */
 .project-mockup{display:flex;justify-content:center;align-items:center;}
 .mockup-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem;}
 .device{
   position:relative;
   width:200px;
-  height:480px;
-  border-radius:38px;
+  height:404px;
+  border-radius:28px;
   background:linear-gradient(145deg,#1a1a1a 0%,#2a2a2a 50%,#1a1a1a 100%);
-  padding:7px;
+  padding:6px 6px;
   box-shadow:
     0 0 0 1.5px rgba(255,255,255,.08),
     inset 0 0 0 1px rgba(255,255,255,.04),
@@ -135,21 +135,10 @@ section{scroll-margin-top:64px;padding:6rem 3rem;border-bottom:1px solid var(--b
   flex-shrink:0;
 }
 .mockup-wrap:hover .device{transform:translateY(-6px);}
-/* punch-hole centralizado */
-.device::before{
-  content:'';
-  position:absolute;
-  top:11px;left:50%;transform:translateX(-50%);
-  width:8px;height:8px;
-  background:#000;
-  border-radius:50%;
-  z-index:3;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
-}
 .device-screen{
   position:relative;
   width:100%;height:100%;
-  border-radius:32px;
+  border-radius:22px;
   overflow:hidden;
   background:#0a0a08;
 }
@@ -302,7 +291,7 @@ img,video{max-width:100%;height:auto;}
   .project-tags .tag{flex-shrink:0;}
   /* Mockup centraliza e respeita largura do viewport */
   .project-mockup{width:100%;}
-  .device{width:min(200px,calc(100vw - 6rem));height:auto;aspect-ratio:200/480;}
+  .device{width:min(200px,calc(100vw - 6rem));height:auto;aspect-ratio:200/404;}
   .numbers-strip{grid-template-columns:repeat(2,1fr);}
   .number-card{padding:1.75rem 1rem;}
   .number-value{font-size:clamp(2rem,7vw,2.6rem);}
