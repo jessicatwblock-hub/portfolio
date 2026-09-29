@@ -286,7 +286,9 @@ section{scroll-margin-top:64px;padding:5rem 3rem;border-bottom:1px solid var(--b
   object-fit:cover;
   object-position:top center;
 }
-
+/* Projetos 10–13: screenshots 818×1598, proporção preservada sem crop/esticamento */
+.device.device-portrait{height:auto;aspect-ratio:200 / 405;}
+.device-portrait .device-slide img{object-fit:contain;object-position:center;}
 /* EXPERIENCE — espaços generosos, divisórias, chips */
 .exp-list{display:flex;flex-direction:column;margin-top:3rem;}
 .exp-item{display:grid;grid-template-columns:200px 1fr;gap:3rem;padding:2.75rem 0 3rem;border-bottom:1px solid var(--border);align-items:start;}
@@ -519,6 +521,7 @@ img,video{max-width:100%;height:auto;}
 /* RESPONSIVE — 480px */
 @media(max-width:480px){.projects-gallery{grid-template-columns:1fr !important;}}
 
+@media(max-width:768px){.device.device-portrait{height:auto;aspect-ratio:200 / 405;}}
 </style>
 </head>
 <body>
@@ -945,7 +948,7 @@ img,video{max-width:100%;height:auto;}
   <!-- 10 EXACTA -->
   <article class="project-item reveal" aria-labelledby="proj10-title">
     <div class="project-mockup" aria-label="Screenshot real do projeto Exacta">
-      <div class="mockup-wrap"><div class="device"><div class="device-screen">
+      <div class="mockup-wrap"><div class="device device-portrait"><div class="device-screen">
         <div class="device-island" aria-hidden="true"></div>
         <div class="device-statusbar" aria-hidden="true"><span class="device-statusbar-time">9:41</span></div>
         <div class="device-slides" id="exacta-slides"><div class="device-slide active"><img src="exacta_1.jpeg" alt="Tela real do Exacta, controle de despesas" loading="lazy"/></div><div class="device-slide"><img src="exacta_2.jpeg" alt="Tela real do Exacta" loading="lazy"/></div><div class="device-slide"><img src="exacta_3.jpeg" alt="Tela real do Exacta" loading="lazy"/></div><div class="device-slide"><img src="exacta_4.jpeg" alt="Tela real do Exacta" loading="lazy"/></div></div>
@@ -965,7 +968,7 @@ img,video{max-width:100%;height:auto;}
   <!-- 11 PAULO OTÁVIO -->
   <article class="project-item reveal" aria-labelledby="proj11-title">
     <div class="project-mockup" aria-label="Screenshot real do portfólio de Paulo Otávio">
-      <div class="mockup-wrap"><div class="device"><div class="device-screen">
+      <div class="mockup-wrap"><div class="device device-portrait"><div class="device-screen">
         <div class="device-island" aria-hidden="true"></div>
         <div class="device-statusbar" aria-hidden="true"><span class="device-statusbar-time">9:41</span></div>
         <div class="device-slides" id="paulo-slides"><div class="device-slide active"><img src="paulo_1.jpeg" alt="Tela real do portfólio de Paulo Otávio" loading="lazy"/></div><div class="device-slide"><img src="paulo_2.jpeg" alt="Tela real do portfólio de Paulo Otávio" loading="lazy"/></div><div class="device-slide"><img src="paulo_3.jpeg" alt="Tela real do portfólio de Paulo Otávio" loading="lazy"/></div><div class="device-slide"><img src="paulo_4.jpeg" alt="Tela real do portfólio de Paulo Otávio" loading="lazy"/></div><div class="device-slide"><img src="paulo_5.jpeg" alt="Tela real do portfólio de Paulo Otávio" loading="lazy"/></div></div>
@@ -985,7 +988,7 @@ img,video{max-width:100%;height:auto;}
   <!-- 12 MVG OPS -->
   <article class="project-item reveal" aria-labelledby="proj12-title">
     <div class="project-mockup" aria-label="Screenshot real do portfólio MVG Ops">
-      <div class="mockup-wrap"><div class="device"><div class="device-screen">
+      <div class="mockup-wrap"><div class="device device-portrait"><div class="device-screen">
         <div class="device-island" aria-hidden="true"></div>
         <div class="device-statusbar" aria-hidden="true"><span class="device-statusbar-time">9:41</span></div>
         <div class="device-slides" id="mvg-slides"><div class="device-slide active"><img src="mvg_1.jpeg" alt="Tela real do portfólio MVG Ops" loading="lazy"/></div><div class="device-slide"><img src="mvg_2.jpeg" alt="Tela real do portfólio MVG Ops" loading="lazy"/></div><div class="device-slide"><img src="mvg_3.jpeg" alt="Tela real do portfólio MVG Ops" loading="lazy"/></div></div>
@@ -1005,7 +1008,7 @@ img,video{max-width:100%;height:auto;}
   <!-- 13 VARANDAS -->
   <article class="project-item reveal" aria-labelledby="proj13-title">
     <div class="project-mockup" aria-label="Screenshots reais do site Varandas">
-      <div class="mockup-wrap"><div class="device"><div class="device-screen">
+      <div class="mockup-wrap"><div class="device device-portrait"><div class="device-screen">
         <div class="device-island" aria-hidden="true"></div>
         <div class="device-statusbar" aria-hidden="true"><span class="device-statusbar-time">9:41</span></div>
         <div class="device-slides" id="varandas-slides">
