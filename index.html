@@ -262,31 +262,29 @@ section{scroll-margin-top:64px;padding:5rem 3rem;border-bottom:1px solid var(--b
   z-index:7;
   box-shadow:inset 0 0 0 .5px rgba(255,255,255,.04);
 }
-/* slide ocupa pelo menos 100% da altura do container, eliminando faixa vazia */
-.device-slide.active{min-height:100%;}
+/* Slides preenchem a área útil da tela, sem faixa preta inferior */
 .device-slides{
-  position:relative;
-  width:100%;height:100%;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  padding-top:24px;
+  position:absolute;
+  inset:24px 0 0;
+  overflow:hidden;
   box-sizing:border-box;
 }
-.device-slides::-webkit-scrollbar{display:none;}
 .device-slide{
   display:none;
+  position:absolute;
+  inset:0;
   width:100%;
+  height:100%;
   opacity:0;
   transition:opacity .15s ease;
 }
 .device-slide.active{display:block;opacity:1;}
 .device-slide img{
-  width:100%;
-  height:auto;
   display:block;
-  object-fit:contain;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:top center;
 }
 
 /* EXPERIENCE — espaços generosos, divisórias, chips */
@@ -1312,7 +1310,12 @@ document.querySelectorAll('.reveal').forEach((el,i)=>{
     {id:'bia-slides',        ms:2200},
     {id:'horizonte-slides',  ms:2200},
     {id:'ss-slides',         ms:2500},
-    {id:'bp-slides',         ms:2400}
+    {id:'bp-slides',         ms:2400},
+    // Projetos novos 10–13
+    {id:'exacta-slides',     ms:2400},
+    {id:'paulo-slides',      ms:2400},
+    {id:'mvg-slides',        ms:2400},
+    {id:'varandas-slides',   ms:2400}
   ];
 
   slideSets.forEach(function(s){
